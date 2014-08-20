@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Record student runs of the Ruby intepreter
+
+# Original version by @mikelikesbikes: https://gist.github.com/mikelikesbikes/8f8756f558fd4f25d566
+# Which was inspired by answers here: http://stackoverflow.com/questions/692000/how-do-i-write-stderr-to-a-file-while-using-tee-with-a-pipe
+
+# Immediately exit if any command fails
+set -e
+
+# Discover absolute path from symlink used to run this script
+symlink=`dirname $0`/`basename $0`
+dir=`dirname $(ls -al $symlink | awk '{print $NF}')`
+
+# Capture path to "real" ruby
+unshimmed_ruby="$(which -a ruby | head -2 | tail -1)"
+
+# Use the value of the TMPDIR env var or the standard /tmp location for
+# stashing temorpary files
+tmpdir="/tmp/ruby-runs"
+
+# Ensure dir exists
+mkdir -p $tmpdir
+
+# # Create a uniquely named (by process id) pipe
+stderr_pipe="$tmpdir/stderr_pipe.$$"
+mkfifo "$stderr_pipe"
+
+# File path to contents of stderr
+stderr_file="$tmpdir/stderr.$$"
+
+# File path to metadata
+metadata_file="$tmpdir/metadata.$$"
+
+# In a background child process: append whatever gets written to the `err` pipe to
+# /tmp/ruby-runs/stderr.$$ as well as writing it to this process's stderr stream
+< "$stderr_pipe" tee -a "$stderr_file" >&2 &
+
+# Invoke all metadata scripts in the realtime subfolder
+#   passing in the Ruby script name and path to unshimmed_ruby
+find $(dirname $0)/metadata/realtime -type f -name "*.sh" -exec sh {} "$unshimmed_ruby" "$@" \; > $metadata_file
+
+# Replace this process with one running the "real" ruby executable (passed the same args that
+# were passed to this executable) - redirect its sterr stream to the `err` pipe
+exec $unshimmed_ruby "$@" 2> "$stderr_pipe"
