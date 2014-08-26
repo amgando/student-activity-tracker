@@ -38,7 +38,7 @@ metadata_file="$tmpdir/metadata.$$"
 
 # Invoke all metadata scripts in the realtime subfolder
 #   passing in the Ruby script name and path to unshimmed_ruby
-find $(dirname $0)/metadata/realtime -type f -name "*.sh" -exec sh {} "$unshimmed_ruby" "$@" \; > $metadata_file
+find $dir/metadata/realtime -type f -name "*.sh" -exec sh {} "$unshimmed_ruby" "$@" \; > $metadata_file
 
 # Replace this process with one running the "real" ruby executable (passed the same args that
 # were passed to this executable) - redirect its sterr stream to the `err` pipe
