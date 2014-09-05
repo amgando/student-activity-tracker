@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+# ensure we're in the parent directory of this file
+cd $(dirname $0)/..
+
+sh metadata/realtime/activity.sh rubby some args
