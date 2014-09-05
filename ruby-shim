@@ -9,8 +9,10 @@
 set -e
 
 # Discover absolute path from symlink used to run this script
-symlink=`dirname $0`/`basename $0`
-dir=`dirname $(ls -al $symlink | awk '{print $NF}')`
+# OSX doesn't have `readlink -f` so this is an abominable hack
+# Apple need to include this: https://github.com/harto/realpath-osx
+realpath="$(python -c 'import os,sys; print os.path.realpath(sys.argv[1])' "$0")"
+dir=$(dirname "$realpath")
 
 # Capture path to "real" ruby
 unshimmed_ruby="$(which -a ruby | head -2 | tail -1)"
