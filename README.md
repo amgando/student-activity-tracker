@@ -32,19 +32,19 @@ the system has 2 parts:
 > this system is invoked every time a student runs the ruby interpreter at the console
 
 ```text
-+------------+                                               
-| ruby-shim  |                                               
-+---+---+----+----> STDOUT \                                 
-    |   |                   |-->  typical student experience 
-    |  (T)+-------> STDERR /                                 
-    |   |                                                    
-    |   +----------------------> /tmp/ruby-runs/stderr.1234  
-    |                                                        
-    +---> create-metadata.sh                                 
-                                                             
-            /realtime      \                                 
++------------+
+| ruby-shim  |
++---+---+----+----> STDOUT \
+    |   |                   |-->  typical student experience
+    |  (T)+-------> STDERR /
+    |   |
+    |   +----------------------> /tmp/ruby-runs/stderr.1234
+    |
+    +---> create-metadata.sh
+
+            /realtime      \
              - git.sh       |--> /tmp/ruby-runs/metadata.1234
-             - machine.sh  /                                 
+             - machine.sh  /
 
 ```
 notes:
@@ -88,6 +88,10 @@ notes:
 
 *am i missing anyone?*
 
+### testing
+
+the `test` folder has a bunch of scripts that will invoke the individual modules with dummy data. they're technically not "tests" because they don't have any assertions. use these scripts during development.
+
 ### project history
 
 **August 20 - August 25**
@@ -95,7 +99,7 @@ notes:
 re-write:
 - to address some of the major issues with the first version
 - to rename the project
-- for me to practice writing shell scripts 
+- for me to practice writing shell scripts
 - for me to practice using git and github
 
 **July 30 - August 20**

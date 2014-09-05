@@ -1,21 +1,9 @@
-# We could also capture git usernames with something like
-#   git config --global --get-all github.username
+echo "email:" $(git config --global --get user.email)
 
-# Grab pair names
-pair_names="$(git config --global user.name)"
+# exit unless the github.username field is set in the git conf
+git config --global --get github.username > /dev/null || exit
 
-# Store IFS to split string on custom character then restore IFS
-oIFS=$IFS; IFS='&'; names=($pair_names); IFS=$oIFS
-
-# Grab pair accounts
-pair_github="$(git config --global user.email | sed -e s/^.*\+// -e s/@.*$//)"
-github=(${pair_github//./ })
-
-
-echo "pair:"
-echo "  user-a:"
-echo "    name:"    "${names[0]}"
-echo "    github:"  "${github[0]}"
-echo "  user-b:"
-echo "    name:"    "${names[1]}"
-echo "    github:"  "${github[1]}"
+echo "github_usernames:"
+git config --global --get-all github.username | while read github_username ; do
+  echo "-" $github_username
+done

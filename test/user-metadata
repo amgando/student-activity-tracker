@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+# ensure we're in the parent directory of this file
+cd $(dirname $0)/..
+
+# There's a .gitconfig file in this folder for this test so we pretend
+# this folder is $HOME causing git to read that config
+export HOME='./test'
+
+sh metadata/realtime/user.sh
