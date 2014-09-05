@@ -24,7 +24,7 @@ tmpdir="/tmp/ruby-runs"
 # Ensure dir exists
 mkdir -p $tmpdir
 
-# # Create a uniquely named (by process id) pipe
+# Create a uniquely named (by process id) pipe
 stderr_pipe="$tmpdir/stderr_pipe.$$"
 mkfifo "$stderr_pipe"
 
