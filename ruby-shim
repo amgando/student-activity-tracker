@@ -17,8 +17,8 @@ dir=$(dirname "$realpath")
 # Capture path to "real" ruby
 unshimmed_ruby="$(which -a ruby | head -2 | tail -1)"
 
-# Use the value of the TMPDIR env var or the standard /tmp location for
-# stashing temorpary files
+# A path to a emphemeral part of the disk used to store the queued data
+# captured by this command.
 tmpdir="/tmp/ruby-runs"
 
 # Ensure dir exists
