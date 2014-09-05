@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+# ensure we're in the parent directory of this file
+cd $(dirname $0)/..
+
+# print some colored text
+# see ansi color table for numeric values: http://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+function clr_echo { printf "\e[0;$1m$2\e[m" ; echo; }
+
+# run the shim with a ruby file that throws an error,
+# don't exit if this script exits with nonzero because it's supposed to
+./ruby-shim test/ruby-file-with-error-for-testing.rb || true
+
+clr_echo 34 "Files created:"
+
+# print a list of files in /tmp/ruby-runs that contain a dot that
+# were created in the last two seconds
+find /tmp/ruby-runs -name '*.*' -ctime -2s | grep -v pipe | while read filename
+do
+  echo
+  clr_echo 33 "$filename"
+  cat $filename
+done
