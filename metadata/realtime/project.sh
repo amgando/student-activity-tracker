@@ -1,2 +1,2 @@
 echo "filesystem:"
-echo "  path:"          "$(pwd)"
+echo "  path:" "$(pwd)"
