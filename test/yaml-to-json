@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+# ensure we're in the parent directory of this file
+cd $(dirname $0)/..
+
+# feed in some yaml
+./yaml-to-json <<YAML
+key:
+  subkey:
+    - first element
+    - second element
+YAML

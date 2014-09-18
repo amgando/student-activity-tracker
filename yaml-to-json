@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+# Converts yaml formatted input (on stdin) to json formatted output (on stdout)
+
+require 'yaml'
+require 'json'
+
+map = YAML.load(STDIN.read)
+puts JSON.dump(map)
