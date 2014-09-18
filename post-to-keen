@@ -1,0 +1,13 @@
+#!/bin/sh
+
+PROJECT_ID=$1
+EVENT_COLLECTION=$2
+WRITE_KEY=$3
+
+curl \
+  -s \
+  "https://api.keen.io/3.0/projects/$PROJECT_ID/events/$EVENT_COLLECTION?api_key=$WRITE_KEY" \
+  -H "Content-Type: application/json" \
+  -d @-
+
+echo

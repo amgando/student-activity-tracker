@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+# ensure we're in the parent directory of this file
+cd $(dirname $0)/..
+
+# sherif's credentials, be nice
+project_id='53d1e3cfce5e4372dd000005'
+event_collection='test-collection'
+write_key='8bebb176662f6d4604473f0de272b83deacc38261dbbf7f3f81f69e512bab2fece374afd027ebe91130232263a676e8d014a2947795f65951ff3e5cf42e6a0368a57a03a17c0639a5e94e43cca6a73c1b7ab39e5b54fc7a374203eafe1cf370e4a96cf9b264fa30270f2bd39ec691541'
+
+echo '{ "hi": "there" }' | ./post-to-keen $project_id $event_collection $write_key
